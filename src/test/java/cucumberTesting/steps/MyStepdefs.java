@@ -9,6 +9,7 @@ import cucumber.api.java.en.When;
 import cucumberTesting.pageObject.FilterPage;
 import cucumberTesting.pageObject.LandingPage;
 import cucumberTesting.pageObject.YandexMarketPage;
+import org.apache.xpath.SourceTree;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -67,7 +68,7 @@ public class MyStepdefs {
 
     @And("^I set the search parametr (\\d+) rubles$")
     public void iSetTheSearchParametrRubles(int arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        System.out.println("ddfdf");
         throw new PendingException();
     }
 
