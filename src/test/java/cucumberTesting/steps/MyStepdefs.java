@@ -8,8 +8,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumberTesting.pageObject.FilterPage;
 import cucumberTesting.pageObject.LandingPage;
+import cucumberTesting.pageObject.ProductPage;
 import cucumberTesting.pageObject.YandexMarketPage;
-import org.apache.xpath.SourceTree;
+
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,12 +19,16 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 public class MyStepdefs {
 
     WebDriver driver;
     LandingPage landingPage;
     YandexMarketPage yandexMarketPage;
     FilterPage filterPage;
+    ProductPage productPage;
 
     @Before
     public void setup() {
@@ -61,56 +67,50 @@ public class MyStepdefs {
     }
 
     @And("^I go to advanced search$")
-    public void iGoToAdvancedSearch() throws Throwable {
+    public void iGoToAdvancedSearch(){
         filterPage = yandexMarketPage.navigateToFilterPage();
-        throw new PendingException();
     }
 
     @And("^I set the search parametr (\\d+) rubles$")
-    public void iSetTheSearchParametrRubles(int arg0) throws Throwable {
-        System.out.println("ddfdf");
-        throw new PendingException();
+    public void iSetTheSearchParametrRubles(int arg0){
+        filterPage.setUpperBoundPrice(arg0);
     }
 
-    @And("^I choose the manufacturers HP and Lenovo$")
-    public void iChooseTheManufacturersHPAndLenovo() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("^I choose the manufacturers (.*)$")
+    public void iChooseTheManufacturersHPLenovo(List<String> arg){
+        filterPage.setManufacturers(arg);
     }
 
     @And("^I click the Apply button$")
-    public void iClickTheApplyButton() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iClickTheApplyButton(){
+        yandexMarketPage = filterPage.navigateToYandexMarketPage();
     }
 
     @Then("^I check that the items on page (\\d+)$")
-    public void iCheckThatTheItemsOnPage(int arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iCheckThatTheItemsOnPage(int arg0){
+        Assert.assertEquals(arg0, yandexMarketPage.countElementsOnPage());
     }
 
-    @And("^I remember the first item in the list$")
-    public void iRememberTheFirstItemInTheList() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("^I remember the item number (\\d+) from the list$")
+    public void rememberTheItemNumberFromTheList(int arg0){
+        yandexMarketPage.getElementFromList(arg0);
     }
 
     @And("^I enter the stored value in the search string$")
-    public void iEnterTheStoredValueInTheSearchString() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iEnterTheStoredValueInTheSearchString(){
+        yandexMarketPage.setSearchField();
     }
 
     @And("^I find and verify that the name of the product corresponds to the stored value$")
-    public void iFindAndVerifyThatTheNameOfTheProductCorrespondsToTheStoredValue() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iFindAndVerifyThatTheNameOfTheProductCorrespondsToTheStoredValue() {
+        productPage = yandexMarketPage.navigateToProductPage();
+        Assert.assertEquals(productPage.getProductName(), yandexMarketPage.elementFromList);
+
     }
 
     @And("^I close the browser$")
-    public void iCloseTheBrowser() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iCloseTheBrowser(){
+        productPage.closeDriver();
     }
+
 }

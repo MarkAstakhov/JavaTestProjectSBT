@@ -8,10 +8,10 @@ Feature: Testing Yandex.Market
     And I select the subsection "Ноутбуки"
     And I go to advanced search
     And I set the search parametr 30000 rubles
-    And I choose the manufacturers HP and Lenovo
+    And I choose the manufacturers HP, Lenovo
     And I click the Apply button
-    Then I check that the items on page 10
-    And I remember the first item in the list
+    Then I check that the items on page 12
+    And I remember the item number 1 from the list
     And I enter the stored value in the search string
     And I find and verify that the name of the product corresponds to the stored value
     And I close the browser

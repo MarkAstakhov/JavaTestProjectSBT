@@ -16,4 +16,8 @@ public class AbstractPage {
         driver.get("https://www.yandex.ru");
         return new LandingPage(driver);
     }
+
+    public void closeDriver() {
+        driver.quit();
+    }
 }
