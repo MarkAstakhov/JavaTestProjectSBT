@@ -14,13 +14,18 @@ import cucumberTesting.pageObject.YandexMarketPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 public class MyStepdefs {
 
@@ -35,9 +40,21 @@ public class MyStepdefs {
         //System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver-0.18\\geckodriver.exe");
         //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         //capabilities.setCapability("marionette", true);
+        //capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "normal");
         //driver = new FirefoxDriver(capabilities);
+
+
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver-2.31\\chromedriver.exe");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        capabilities.setCapability("pageLoadStrategy", "none");
+
+
+
+        driver = new ChromeDriver(capabilities);
+        //driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+
     }
 
     @Given("^I open the Firefox browser and expand to full screen$")
@@ -49,7 +66,9 @@ public class MyStepdefs {
     public void iOpenYandexRu(){
         landingPage = new LandingPage(driver);
         landingPage.navigateToYandex();
-    }
+
+        }
+
 
     @When("^I select \"([^\"]*)\"\\(market\\.yandex\\.ru\\)$")
     public void iSelectTheSectionMarketYandexRu(String arg0) {
@@ -68,7 +87,7 @@ public class MyStepdefs {
 
     @And("^I go to advanced search$")
     public void iGoToAdvancedSearch(){
-        filterPage = yandexMarketPage.navigateToFilterPage();
+            filterPage = yandexMarketPage.navigateToFilterPage();
     }
 
     @And("^I set the search parametr (\\d+) rubles$")
@@ -105,12 +124,12 @@ public class MyStepdefs {
     public void iFindAndVerifyThatTheNameOfTheProductCorrespondsToTheStoredValue() {
         productPage = yandexMarketPage.navigateToProductPage();
         Assert.assertEquals(productPage.getProductName(), yandexMarketPage.elementFromList);
-
     }
 
     @And("^I close the browser$")
     public void iCloseTheBrowser(){
-        productPage.closeDriver();
+        //productPage.closeDriver();
+
     }
 
 }
