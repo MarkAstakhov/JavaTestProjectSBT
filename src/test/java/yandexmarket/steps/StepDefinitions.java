@@ -29,26 +29,8 @@ public class StepDefinitions {
     FilterPage filterPage;
     ProductPage productPage;
 
-    @Before
-    public void setup() {
-        //System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver-0.18\\geckodriver.exe");
-        //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        //capabilities.setCapability("marionette", true);
-        //capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "normal");
-        //driver = new FirefoxDriver(capabilities);
-
-
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-        capabilities.setCapability("pageLoadStrategy", "none");
-
-
-
-        driver = new ChromeDriver(capabilities);
-        //driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-
+    public StepDefinitions() {
+        driver = Hooks.driver;
     }
 
     @Given("^I open the Firefox browser and expand to full screen$")
@@ -62,7 +44,6 @@ public class StepDefinitions {
         landingPage.navigateToYandex();
 
         }
-
 
     @When("^I select \"([^\"]*)\"\\(market\\.yandex\\.ru\\)$")
     public void iSelectTheSectionMarketYandexRu(String arg0) {
@@ -124,11 +105,4 @@ public class StepDefinitions {
         productPage = yandexMarketPage.navigateToProductPage();
         Assert.assertEquals(productPage.getProductName(), yandexMarketPage.elementFromList);
     }
-
-    @And("^I close the browser$")
-    public void iCloseTheBrowser(){
-        productPage.closeDriver();
-
-    }
-
 }

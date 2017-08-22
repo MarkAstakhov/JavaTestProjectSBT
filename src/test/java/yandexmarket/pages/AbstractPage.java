@@ -20,10 +20,6 @@ public class AbstractPage {
             return new LandingPage(driver);
     }
 
-    public void closeDriver() {
-        driver.quit();
-    }
-
     public void clickAndCloseWhenReady(By locator, long timeout){
         wait = new WebDriverWait(driver, timeout);
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -42,7 +38,7 @@ public class AbstractPage {
 
     public WebElement getWhenVisible(By locator, long timeout) {
 
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait = new WebDriverWait(driver, timeout);
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return element;
 
