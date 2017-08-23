@@ -16,14 +16,12 @@ public class ProductPage extends AbstractPage {
 
     public String getProductName() {
 
-        //WebDriverWait wait = new WebDriverWait(driver, 10);
-        //WebElement nameOfProduct = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("html/body/div[1]/div[4]/div[1]/div[1]/div/div[1]/h1")));
-
         String string = null;
         try {
             string = getWhenVisible(productName, MAX_LOAD_TIME).getText();
         } catch (TimeoutException e) {
-            System.out.println("element Имя товара wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
+            //System.out.println("element Имя товара wasn't loaded during" + MAX_LOAD_TIME + " sec");
         }
         return string;
     }

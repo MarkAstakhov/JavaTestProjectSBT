@@ -5,6 +5,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.TimeoutException;
+import ru.yandex.qatools.allure.annotations.Attachment;
 import yandexmarket.pages.FilterPage;
 import yandexmarket.pages.LandingPage;
 import yandexmarket.pages.ProductPage;
@@ -19,9 +21,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class StepDefinitions {
+
+    private static Logger log = Logger.getLogger(StepDefinitions.class.getName());
 
     WebDriver driver;
     LandingPage landingPage;
@@ -46,63 +51,123 @@ public class StepDefinitions {
         }
 
     @When("^I select \"([^\"]*)\"\\(market\\.yandex\\.ru\\)$")
-    public void iSelectTheSectionMarketYandexRu(String arg0) {
+    public void iSelectTheSectionMarketYandexRu(String arg0) throws TimeoutException{
+        try{
         yandexMarketPage = landingPage.navigateToYandexMarket(arg0);
+    }catch (TimeoutException e){
+        ExceptionMessage("section Маркет wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I select the section \"([^\"]*)\"$")
-    public void iSelectTheSubsection(String arg0) {
+    public void iSelectTheSubsection(String arg0) throws TimeoutException{
+        try{
         yandexMarketPage.navigateToSection(arg0);
+    }catch (TimeoutException e){
+        ExceptionMessage("section Компьютеры wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I select the subsection \"([^\"]*)\"$")
-    public void iSelectTheSubsubsection(String arg0) {
-        yandexMarketPage.navigateToSubSection(arg0);
+    public void iSelectTheSubsubsection(String arg0) throws TimeoutException{
+        try {
+            yandexMarketPage.navigateToSubSection(arg0);
+        }catch (TimeoutException e){
+            ExceptionMessage("section Ноутбуки wasn't loaded during" + 10 + " sec");
+            throw e;
+        }
     }
 
     @And("^I go to advanced search$")
-    public void iGoToAdvancedSearch(){
+    public void iGoToAdvancedSearch()throws TimeoutException{
+        try {
             filterPage = yandexMarketPage.navigateToFilterPage();
+        }catch (TimeoutException e){
+            ExceptionMessage("element Перейти ко всем фильтрам wasn't loaded during" + 10 + " sec");
+            throw e;
+        }
     }
 
     @And("^I set the search price parametr from (\\d+) rubles$")
-    public void iSetTheSearchPriceParametrFrom(int arg0){
+    public void iSetTheSearchPriceParametrFrom(int arg0)throws TimeoutException{
+        try{
         filterPage.setLowerBoundPrice(arg0);
+    }catch (TimeoutException e){
+        ExceptionMessage("element Поле нижней границы цены wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I set the search price parametr to (\\d+) rubles$")
-    public void iSetTheSearchPriceParametrTo(int arg0){
+    public void iSetTheSearchPriceParametrTo(int arg0)throws TimeoutException{
+        try{
         filterPage.setUpperBoundPrice(arg0);
+    }catch (TimeoutException e){
+        ExceptionMessage("element Поле верхней границы цены wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I choose the manufacturers (.*)$")
-    public void iChooseTheManufacturersHPLenovo(List<String> arg){
+    public void iChooseTheManufacturersHPLenovo(List<String> arg)throws TimeoutException{
+        try{
         filterPage.setManufacturers(arg);
+    }catch (TimeoutException e){
+        ExceptionMessage("element Производитель wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I click the Apply button$")
-    public void iClickTheApplyButton(){
+    public void iClickTheApplyButton()throws TimeoutException{
+        try{
         yandexMarketPage = filterPage.navigateToYandexMarketPage();
+    }catch (TimeoutException e){
+        ExceptionMessage("element Применить фильтры wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @Then("^I check that the items on page (\\d+)$")
-    public void iCheckThatTheItemsOnPage(int arg0){
+    public void iCheckThatTheItemsOnPage(int arg0)throws TimeoutException{
+        try{
         Assert.assertEquals(arg0, yandexMarketPage.countElementsOnPage());
+    }catch (TimeoutException e){
+        ExceptionMessage("element Список товаров wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I remember the item number (\\d+) from the list$")
-    public void rememberTheItemNumberFromTheList(int arg0){
+    public void rememberTheItemNumberFromTheList(int arg0)throws TimeoutException{
         yandexMarketPage.getElementFromList(arg0);
     }
 
     @And("^I enter the stored value in the search string$")
-    public void iEnterTheStoredValueInTheSearchString(){
+    public void iEnterTheStoredValueInTheSearchString()throws TimeoutException{
+        try{
         yandexMarketPage.setSearchField();
+    }catch (TimeoutException e){
+        ExceptionMessage("element Поле поиска wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
     }
 
     @And("^I find and verify that the name of the product corresponds to the stored value$")
-    public void iFindAndVerifyThatTheNameOfTheProductCorrespondsToTheStoredValue() {
+    public void iFindAndVerifyThatTheNameOfTheProductCorrespondsToTheStoredValue() throws TimeoutException{
+        try{
         productPage = yandexMarketPage.navigateToProductPage();
         Assert.assertEquals(productPage.getProductName(), yandexMarketPage.elementFromList);
+    }catch (TimeoutException e){
+        ExceptionMessage("element Имя товара wasn't loaded during" + 10 + " sec");
+        throw e;
+    }
+    }
+
+    @Attachment()
+    public static String ExceptionMessage(String message) throws TimeoutException{
+        return message;
     }
 }

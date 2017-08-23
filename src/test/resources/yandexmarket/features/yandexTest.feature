@@ -1,5 +1,5 @@
 @All
-Feature: Testing Yandex.Market
+Feature: Testing Yandex Market
 
   @1
   Scenario: First searching

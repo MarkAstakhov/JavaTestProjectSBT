@@ -3,6 +3,7 @@ package yandexmarket.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import yandexmarket.steps.StepDefinitions;
 
 public class LandingPage extends AbstractPage{
 
@@ -16,20 +17,13 @@ public class LandingPage extends AbstractPage{
 
     public YandexMarketPage navigateToYandexMarket(String str){
 
-        /*
-        wait = new WebDriverWait(driver, 10);
-        yandexMarketButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathString)));
-        yandexMarketButton.click();
-        wait.until(ExpectedConditions.stalenessOf(yandexMarketButton));
-        return new YandexMarketPage(driver);
-        */
-
-
         yandexMarketButton = By.xpath(String.format("//a[contains(text(),'%s')]", str));
         try {
             clickAndCloseWhenReady(yandexMarketButton, MAX_LOAD_TIME);
         } catch (TimeoutException e) {
-            System.out.println("section Маркет wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
+            //System.out.println("section Маркет wasn't loaded during" + MAX_LOAD_TIME + " sec");
+
         }
         return new YandexMarketPage(driver);
     }

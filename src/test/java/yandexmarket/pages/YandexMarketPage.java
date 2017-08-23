@@ -6,8 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.TimeoutException;
+import yandexmarket.steps.StepDefinitions;
 
+import java.sql.Time;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class YandexMarketPage extends AbstractPage {
 
@@ -28,52 +31,46 @@ public class YandexMarketPage extends AbstractPage {
         super(driver);
     }
 
-    public YandexMarketPage navigateToSection(String str) {
+    public YandexMarketPage navigateToSection(String str){
         sectionButton = By.xpath(String.format("//a[contains(text(),'%s') and contains(@class ,'link topmenu')]", str));
         try {
             clickAndCloseWhenReady(sectionButton, MAX_LOAD_TIME);
-        } catch (TimeoutException e) {
-            System.out.println("section Компьютеры wasn't loaded during" + MAX_LOAD_TIME + " sec");
-        }
-        /*
-        wait = new WebDriverWait(driver, MAX_LOAD_TIME);
-        try {
-            WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(sectionButton));
-            button.click();
-            wait.until(ExpectedConditions.stalenessOf(button));
         }catch (TimeoutException e){
-            System.out.println("element wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
-        */
+            //log.info("section Компьютеры wasn't loaded during" + MAX_LOAD_TIME + " sec");
         return new YandexMarketPage(driver);
     }
 
-    public YandexMarketPage navigateToSubSection(String str) {
+    public YandexMarketPage navigateToSubSection(String str)throws TimeoutException{
         subsectionButton = By.xpath(String.format("//a[contains(text(),'%s') and contains(@class ,'link catalog')]", str));
         try {
             clickAndCloseWhenReady(subsectionButton, MAX_LOAD_TIME);
         } catch (TimeoutException e) {
-            System.out.println("section Ноутбуки wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            //log.info("section Ноутбуки wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
         return new YandexMarketPage(driver);
     }
 
-    public FilterPage navigateToFilterPage() {
+    public FilterPage navigateToFilterPage() throws TimeoutException{
         filterButton = By.xpath("//a[contains(text(),'Перейти ко всем фильтрам')]");
         try {
             clickAndCloseWhenReady(filterButton, MAX_LOAD_TIME);
         } catch (TimeoutException e) {
-            System.out.println("element Перейти ко всем фильтрам wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            //log.info("element Перейти ко всем фильтрам wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
         return new FilterPage(driver);
     }
 
-    public int countElementsOnPage() {
+    public int countElementsOnPage() throws TimeoutException{
         try {
             WebDriverWait wait = new WebDriverWait(driver, MAX_LOAD_TIME);
             listOfElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(productBox));
         } catch (TimeoutException e) {
-            System.out.println("element Список товаров wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            //log.info("element Список товаров wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
         return listOfElements.size();
     }
@@ -83,39 +80,22 @@ public class YandexMarketPage extends AbstractPage {
 
     }
 
-    public void setSearchField() {
+    public void setSearchField() throws TimeoutException{
         try {
             WebElement textBox = getWhenVisible(searchField, MAX_LOAD_TIME);
             textBox.sendKeys(elementFromList);
         } catch (TimeoutException e) {
-            System.out.println("element Поле поиска wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            //log.info("element Поле поиска wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
     }
 
-    public ProductPage navigateToProductPage() {
-        //WebElement searchButton = driver.findElement(By.xpath("//button[contains(@class ,'button2')]"));
-        //searchButton.click();
-        //wait.until(ExpectedConditions.stalenessOf(searchButton));
-        //return new ProductPage(driver);
-        //wait = new WebDriverWait(driver, MAX_WAIT_TIME_SEC);
-        //WebElement searchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class ,'button2')]")));
-        //try {
-        //searchButton.click();
-        //throw new TimeoutException();
-        //} catch (TimeoutException ignore){
-        //}
-
-
-        //wait = new WebDriverWait(driver, 10);
-        //WebElement searchButton = driver.findElement(By.xpath("//button[contains(@class ,'button2')]"));
-        //searchButton.click();
-        //wait.until(ExpectedConditions.stalenessOf(searchButton));
-        //return new ProductPage(driver);
-
+    public ProductPage navigateToProductPage() throws TimeoutException{
         try {
             clickAndCloseWhenReady(searchButton, MAX_LOAD_TIME);
         } catch (TimeoutException e) {
-            System.out.println("element Кнопка Найти wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            //log.info("element Кнопка Найти wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
         }
         return new ProductPage(driver);
 

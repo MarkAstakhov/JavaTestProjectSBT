@@ -37,7 +37,8 @@ public class FilterPage extends AbstractPage {
             WebElement textBox = getWhenVisible(lowerBoundPriceField, MAX_LOAD_TIME);
             textBox.sendKeys(String.valueOf(price));
         } catch (TimeoutException e) {
-            System.out.println("element Поле нижней границы цены wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
+            //System.out.println("element Поле нижней границы цены wasn't loaded during" + MAX_LOAD_TIME + " sec");
         }
         return new FilterPage(driver);
     }
@@ -47,7 +48,8 @@ public class FilterPage extends AbstractPage {
             WebElement textBox = getWhenVisible(upperBoundPriceField, MAX_LOAD_TIME);
             textBox.sendKeys(String.valueOf(price));
         } catch (TimeoutException e) {
-            System.out.println("element Поле верхней границы цены wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
+            //System.out.println("element Поле верхней границы цены wasn't loaded during" + MAX_LOAD_TIME + " sec");
         }
         return new FilterPage(driver);
     }
@@ -56,9 +58,9 @@ public class FilterPage extends AbstractPage {
         for (int i = 0; i < arg.size(); i++) {
             checkBoxOfManufacturer = By.xpath(String.format("//label[@class='checkbox__label' and contains(text(),'%s')]", arg.get(i)));
             try {
-                clickCheckBoxWhenReady(checkBoxOfManufacturer, 1);
+                clickCheckBoxWhenReady(checkBoxOfManufacturer, MAX_LOAD_TIME);
             } catch (TimeoutException e) {
-                System.out.println("element Производитель wasn't loaded during" + MAX_LOAD_TIME + " sec");
+                //System.out.println("element Производитель wasn't loaded during" + MAX_LOAD_TIME + " sec");
             }
         }
         return new FilterPage(driver);
@@ -68,7 +70,8 @@ public class FilterPage extends AbstractPage {
         try {
             clickAndCloseWhenReady(acceptFiltersButton, MAX_LOAD_TIME);
         } catch (TimeoutException e) {
-            System.out.println("element Применить фильтры wasn't loaded during" + MAX_LOAD_TIME + " sec");
+            throw e;
+            //System.out.println("element Применить фильтры wasn't loaded during" + MAX_LOAD_TIME + " sec");
         }
         return new YandexMarketPage(driver);
     }
