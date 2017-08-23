@@ -8,7 +8,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
         features = "src/test/resources/yandexmarket/features",
         glue = "yandexmarket.steps",
-        tags = "@1" // @All, @1, @2
+        tags = "@All" // @All, @1, @2
 
 )
 public class RunnerTest {

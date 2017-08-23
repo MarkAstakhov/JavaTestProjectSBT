@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 
 public class ProductPage extends AbstractPage {
 
-    private static final long MAX_LOAD_TIME = 10;
-
     By productName = By.xpath("//div[@class='n-title__text']");
 
     public ProductPage(WebDriver driver) {
@@ -18,10 +16,9 @@ public class ProductPage extends AbstractPage {
 
         String string = null;
         try {
-            string = getWhenVisible(productName, MAX_LOAD_TIME).getText();
+            string = getWhenVisible(productName).getText();
         } catch (TimeoutException e) {
             throw e;
-            //System.out.println("element Имя товара wasn't loaded during" + MAX_LOAD_TIME + " sec");
         }
         return string;
     }

@@ -1,6 +1,5 @@
 package yandexmarket.steps;
 
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,18 +14,11 @@ import yandexmarket.pages.YandexMarketPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.List;
-import java.util.logging.Logger;
+
 
 
 public class StepDefinitions {
-
-    private static Logger log = Logger.getLogger(StepDefinitions.class.getName());
 
     WebDriver driver;
     LandingPage landingPage;
@@ -55,7 +47,7 @@ public class StepDefinitions {
         try{
         yandexMarketPage = landingPage.navigateToYandexMarket(arg0);
     }catch (TimeoutException e){
-        ExceptionMessage("section Маркет wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("section Маркет wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -65,7 +57,7 @@ public class StepDefinitions {
         try{
         yandexMarketPage.navigateToSection(arg0);
     }catch (TimeoutException e){
-        ExceptionMessage("section Компьютеры wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("section Компьютеры wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -75,7 +67,7 @@ public class StepDefinitions {
         try {
             yandexMarketPage.navigateToSubSection(arg0);
         }catch (TimeoutException e){
-            ExceptionMessage("section Ноутбуки wasn't loaded during" + 10 + " sec");
+            ExceptionMessage("section Ноутбуки wasn't loaded, change MAX_LOAD_TIME for page");
             throw e;
         }
     }
@@ -85,7 +77,7 @@ public class StepDefinitions {
         try {
             filterPage = yandexMarketPage.navigateToFilterPage();
         }catch (TimeoutException e){
-            ExceptionMessage("element Перейти ко всем фильтрам wasn't loaded during" + 10 + " sec");
+            ExceptionMessage("element Перейти ко всем фильтрам wasn't loaded, change MAX_LOAD_TIME for page");
             throw e;
         }
     }
@@ -95,7 +87,7 @@ public class StepDefinitions {
         try{
         filterPage.setLowerBoundPrice(arg0);
     }catch (TimeoutException e){
-        ExceptionMessage("element Поле нижней границы цены wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Поле нижней границы цены wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -105,7 +97,7 @@ public class StepDefinitions {
         try{
         filterPage.setUpperBoundPrice(arg0);
     }catch (TimeoutException e){
-        ExceptionMessage("element Поле верхней границы цены wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Поле верхней границы цены wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -115,7 +107,7 @@ public class StepDefinitions {
         try{
         filterPage.setManufacturers(arg);
     }catch (TimeoutException e){
-        ExceptionMessage("element Производитель wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Производители wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -125,7 +117,7 @@ public class StepDefinitions {
         try{
         yandexMarketPage = filterPage.navigateToYandexMarketPage();
     }catch (TimeoutException e){
-        ExceptionMessage("element Применить фильтры wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Применить фильтры wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -135,7 +127,7 @@ public class StepDefinitions {
         try{
         Assert.assertEquals(arg0, yandexMarketPage.countElementsOnPage());
     }catch (TimeoutException e){
-        ExceptionMessage("element Список товаров wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Список товаров wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -150,7 +142,7 @@ public class StepDefinitions {
         try{
         yandexMarketPage.setSearchField();
     }catch (TimeoutException e){
-        ExceptionMessage("element Поле поиска wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Поле поиска wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
@@ -161,13 +153,13 @@ public class StepDefinitions {
         productPage = yandexMarketPage.navigateToProductPage();
         Assert.assertEquals(productPage.getProductName(), yandexMarketPage.elementFromList);
     }catch (TimeoutException e){
-        ExceptionMessage("element Имя товара wasn't loaded during" + 10 + " sec");
+        ExceptionMessage("element Имя товара wasn't loaded, change MAX_LOAD_TIME for page");
         throw e;
     }
     }
 
     @Attachment()
-    public static String ExceptionMessage(String message) throws TimeoutException{
+    private static String ExceptionMessage(String message) throws TimeoutException{
         return message;
     }
 }

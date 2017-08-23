@@ -8,11 +8,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AbstractPage {
 
+    public static final long MAX_LOAD_TIME = 10;
+
     protected WebDriver driver;
     protected WebDriverWait wait;
 
     public AbstractPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, MAX_LOAD_TIME);
     }
 
     public LandingPage navigateToYandex(){
@@ -20,25 +23,22 @@ public class AbstractPage {
             return new LandingPage(driver);
     }
 
-    public void clickAndCloseWhenReady(By locator, long timeout){
-        wait = new WebDriverWait(driver, timeout);
+    public void clickAndCloseWhenReady(By locator){
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(locator));
         button.click();
         wait.until(ExpectedConditions.stalenessOf(button));
     }
 
 
-    public void clickCheckBoxWhenReady(By locator, long timeout){
-        wait = new WebDriverWait(driver, timeout);
+    public void clickCheckBoxWhenReady(By locator){
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(locator));
         button.click();
         wait.until(ExpectedConditions.elementToBeSelected(button));
     }
 
 
-    public WebElement getWhenVisible(By locator, long timeout) {
+    public WebElement getWhenVisible(By locator) {
 
-        wait = new WebDriverWait(driver, timeout);
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return element;
 
