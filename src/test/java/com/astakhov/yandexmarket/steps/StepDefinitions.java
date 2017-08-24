@@ -16,6 +16,9 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
+// Задача автоматизации решена с помощью шаблона проектирования Page Object
+// Еще одним архитектурным решением, который можно использовать, является класс Page Factory
+
 
 public class StepDefinitions {
 
@@ -132,7 +135,7 @@ public class StepDefinitions {
             throw e;
         }
         catch (AssertionError e){
-            exceptionMessage = getExceptionMessage("expected and actual results not equal");
+            exceptionMessage = getExceptionMessage("expected and actual results not equal, change MAX_LOAD_TIME for page");
             throw e;
         }
     }
@@ -162,7 +165,7 @@ public class StepDefinitions {
             throw e;
         }
         catch (AssertionError e){
-            exceptionMessage = getExceptionMessage("expected and actual results not equal");
+            exceptionMessage = getExceptionMessage("expected and actual results not equal, change MAX_LOAD_TIME for page");
             throw e;
         }
     }

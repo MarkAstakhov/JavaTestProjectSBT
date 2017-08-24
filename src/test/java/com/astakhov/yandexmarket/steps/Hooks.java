@@ -14,6 +14,11 @@ public class Hooks {
     @Before(value = "@All")
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver.exe");
+
+
+        // Page load strategy - interactive.
+        // Означает, что основное содержимое страницы загрузилось и отрисовалось.
+        // Пользователь уже уже может с ней взаимодействовать, но ещё продолжается загрузка дополнительных ресурсов.
         ChromeOptions options = new ChromeOptions();
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
