@@ -1,4 +1,4 @@
-package yandexmarket.steps;
+package com.astakhov.yandexmarket.steps;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -9,9 +9,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Hooks {
 
-    public static WebDriver driver;
+    static WebDriver driver;
 
-    @Before(value ="@All")
+    @Before(value = "@All")
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "./src/test/resources/drivers/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
